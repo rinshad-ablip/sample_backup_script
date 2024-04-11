@@ -20,4 +20,10 @@ mkdir -p $LOCAL_DIR
 # ssh into remote server and create backup archive
 ssh $REMOTE_USER@$REMOTE_HOST "cd $REMOTE_DIR && tar czf - $DB_NAME.sql | gzip -c" > $LOCAL_DIR/$BACKUP_NAME
 
+# take database backup
+mysqldump -u $DB_USER -p$DB_PASS $DB_NAME > $LOCAL_DIR/$DB_NAME.sql
+
+# compress the database backup
+gzip $LOCAL_DIR/$DB_NAME.sql
+
 echo "Backup completed successfully"
